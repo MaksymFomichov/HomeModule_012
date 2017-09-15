@@ -39,6 +39,9 @@ public class Main extends Application {
         Button button = new Button("UPDATE");
         borderPane.setLeft(button);
         showPictures();
+        root.getChildren().addAll(gridPane, borderPane);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
         button.setOnMouseClicked((javafx.scene.input.MouseEvent event) -> {
             root.getChildren().clear();
@@ -46,11 +49,6 @@ public class Main extends Application {
             showPictures();
             root.getChildren().addAll(gridPane, borderPane);
         });
-
-
-        root.getChildren().addAll(gridPane, borderPane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     private void showPictures() {
@@ -69,6 +67,7 @@ public class Main extends Application {
                                 images[finalI][finalJ].setFitHeight(150);
                                 images[finalI][finalJ].setFitWidth(150);
                                 gridPane.add(images[finalI][finalJ], finalI, finalJ);
+                                System.out.println(count[0]);
                                 count[0]++;
                             }
                         });
