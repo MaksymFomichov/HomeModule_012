@@ -10,15 +10,17 @@ public class Task_2 {
 
 
     public static void runTask() throws ExecutionException, InterruptedException {
-        int arrayInt[] = generateArray(80);
+        int arrayInt[] = generateArray(80000000);
         int countCore = Runtime.getRuntime().availableProcessors();
         threadPool = Executors.newFixedThreadPool(countCore);
-        //System.out.println("Enter N");
-        for (int i = 0; i < 3; i++) {
+        System.out.println("Enter N");
+        int count = checkNumber();
+        for (int i = 0; i < count; i++) {
             System.out.println((i + 1) + " прогон " + "- режим Thread результат " + startModeThread(countCore, arrayInt));
             System.out.println((i + 1) + " прогон " + "- режим ThreadPool результат " + startModeThreadPool(countCore, arrayInt));
             System.out.println((i + 1) + " прогон закончен");
         }
+        threadPool.shutdown();
     }
 
     private static Double startModeThread(int countCore, int[] arrayInt) throws ExecutionException, InterruptedException {
@@ -85,7 +87,7 @@ public class Task_2 {
         for (FutureTask value : taskList) {
             result += (double) value.get();
         }
-        threadPool.shutdown();
+        //threadPool.shutdown();
         long endTime = System.currentTimeMillis();
         System.out.println("Режим ThreadPool посчитан за " + (endTime - startTime) + "ms");
         return result;
