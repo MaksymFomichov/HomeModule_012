@@ -1,4 +1,4 @@
-package thread;
+package task_1_2;
 
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
