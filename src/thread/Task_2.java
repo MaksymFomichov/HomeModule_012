@@ -6,28 +6,17 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Task_2 {
+    private static ExecutorService threadPool;
+
 
     public static void runTask() throws ExecutionException, InterruptedException {
         int arrayInt[] = generateArray(80);
         int countCore = Runtime.getRuntime().availableProcessors();
-        System.out.println("Enter N");
-        for (int i = 0; i < checkNumber(); i++) {
-            FutureTask<Double> modeThread = new FutureTask<Double>(new Callable<Double>() {
-                @Override
-                public Double call() throws Exception {
-                    return startModeThread(countCore, arrayInt);
-                }
-            });
-            new Thread(modeThread).start();
-            System.out.println((i + 1) + " прогон " + "- режим Thread результат " + modeThread.get());
-            FutureTask<Double> modeThreadPool = new FutureTask<Double>(new Callable<Double>() {
-                @Override
-                public Double call() throws Exception {
-                    return startModeThreadPool(countCore, arrayInt);
-                }
-            });
-            new Thread(modeThreadPool).start();
-            System.out.println((i + 1) + " прогон " + "- режим ThreadPool результат " + modeThreadPool.get());
+        threadPool = Executors.newFixedThreadPool(countCore);
+        //System.out.println("Enter N");
+        for (int i = 0; i < 3; i++) {
+            System.out.println((i + 1) + " прогон " + "- режим Thread результат " + startModeThread(countCore, arrayInt));
+            System.out.println((i + 1) + " прогон " + "- режим ThreadPool результат " + startModeThreadPool(countCore, arrayInt));
             System.out.println((i + 1) + " прогон закончен");
         }
     }
@@ -67,7 +56,6 @@ public class Task_2 {
     }
 
     private static Double startModeThreadPool(int countCore, int[] arrayInt) throws ExecutionException, InterruptedException {
-        ExecutorService threadPool = Executors.newFixedThreadPool(countCore);
         long startTime = System.currentTimeMillis();
         double result = 0;
         int iter = 0;
