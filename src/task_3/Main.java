@@ -39,6 +39,7 @@ public class Main extends Application {
         Button button = new Button("UPDATE");
         borderPane.setLeft(button);
         showPictures();
+        //showPicturesOneThread();
         root.getChildren().addAll(gridPane, borderPane);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -47,8 +48,23 @@ public class Main extends Application {
             root.getChildren().clear();
             Collections.shuffle(listLinks);
             showPictures();
+            //showPicturesOneThread();
             root.getChildren().addAll(gridPane, borderPane);
         });
+    }
+
+    private void showPicturesOneThread() {
+        int count = 0;
+        for (int i = 0; i < images.length; i++) {
+            for (int j = 0; j < images.length; j++) {
+                images[i][j] = new ImageView(listLinks.get(count));
+                images[i][j].setFitHeight(150);
+                images[i][j].setFitWidth(150);
+                gridPane.add(images[i][j], i, j);
+                System.out.println(count);
+                count++;
+            }
+        }
     }
 
     private void showPictures() {
